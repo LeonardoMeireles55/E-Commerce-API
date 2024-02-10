@@ -5,6 +5,7 @@ import com.leonardo.ecommerce.enums.CategoryEnums;
 import com.leonardo.ecommerce.record.ecommerce.ProductDTO;
 import com.leonardo.ecommerce.repository.ecommerce.ProductRepositoryCustom;
 import com.leonardo.ecommerce.service.ecommerce.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
+@RequiredArgsConstructor
 public class ProductServiceTest {
     @MockBean
     private ProductRepositoryCustom productRepositoryCustom;
