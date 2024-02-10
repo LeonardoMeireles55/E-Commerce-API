@@ -27,7 +27,7 @@ A Spring Boot project simple E-Commerce.
 #### Step 1. Clone the repository
 Run the command below in Git Bash or Terminal to clone the repository:
 ```
-git clone https://github.com/LeonardoMeireles55/AuthUserManagementAPI.git
+git clone https://github.com/LeonardoMeireles55/E-Commerce-API.git
 ```
 #### Step 2. Upload the Docker container to create images
 In the project root directory, run the command:
