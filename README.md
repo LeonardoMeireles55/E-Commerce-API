@@ -36,7 +36,7 @@ docker-compose up or docker compose up
 ```
 #### Step 3. You can Access API documentation
 ```
-http://localhost:8090/swagger-ui.html
+http://localhost:8093/swagger-ui.html
 ```
 #### Step 4. Admin User
 ```
