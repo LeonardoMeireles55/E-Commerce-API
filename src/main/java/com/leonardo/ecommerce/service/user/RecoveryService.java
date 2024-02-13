@@ -1,7 +1,7 @@
 package com.leonardo.ecommerce.service.user;
 
 import com.leonardo.ecommerce.domain.user.ForgotPassword;
-import com.leonardo.ecommerce.infra.exception.ErrorHandling;
+import com.leonardo.ecommerce.infra.exception.GlobalErrorHandling;
 import com.leonardo.ecommerce.infra.security.component.BCryptEncoderComponent;
 import com.leonardo.ecommerce.record.admin.EmailDTO;
 import com.leonardo.ecommerce.repository.user.ForgotPasswordRepositoryCustom;
@@ -21,7 +21,7 @@ public class RecoveryService {
 
     public void generateForgotPassword(String email) {
         if (!userRepositoryCustom.existsByEmail(email)) {
-            throw new ErrorHandling.ResourceNotFoundException("User not exists");
+            throw new GlobalErrorHandling.ResourceNotFoundException("User not exists");
         }
         var userCurrentPassword = userRepositoryCustom.getReferenceByEmail(email);
         String recoveryToken = UUID.randomUUID().toString();
@@ -38,7 +38,7 @@ public class RecoveryService {
         var userRecoveryPassword = forgotPasswordRepositoryCustom.getReferenceByUserEmail(email);
 
         if (!userRecoveryPassword.getUserPassword().trim().equals(password.trim())) {
-            throw new ErrorHandling.PasswordNotMatchesException();
+            throw new GlobalErrorHandling.PasswordNotMatchesException();
         }
         userRepositoryCustom
                 .setPasswordWhereByUsername(userCurrentPassword.getUsername(),
@@ -50,7 +50,7 @@ public class RecoveryService {
         if (!BCryptEncoderComponent
                 .decryptMatches(currentPassword, userCurrentPassword.getPassword())
                 || BCryptEncoderComponent.decryptMatches(newPassword, userCurrentPassword.getPassword())) {
-            throw new ErrorHandling.PasswordNotMatchesException();
+            throw new GlobalErrorHandling.PasswordNotMatchesException();
         } else {
             userRepositoryCustom
                     .setPasswordWhereByUsername(userCurrentPassword.getUsername(),

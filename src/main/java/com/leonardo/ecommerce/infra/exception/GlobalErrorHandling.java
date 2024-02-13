@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
 @Slf4j
-public class ErrorHandling extends ResponseEntityExceptionHandler {
+public class GlobalErrorHandling {
 
     @ExceptionHandler(NoContentException.class)
     @ResponseStatus(HttpStatus.NO_CONTENT)

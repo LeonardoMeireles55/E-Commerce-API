@@ -2,7 +2,7 @@ package com.leonardo.ecommerce.service.user;
 
 import com.leonardo.ecommerce.domain.user.User;
 import com.leonardo.ecommerce.enums.UserRolesEnums;
-import com.leonardo.ecommerce.infra.exception.ErrorHandling;
+import com.leonardo.ecommerce.infra.exception.GlobalErrorHandling;
 import com.leonardo.ecommerce.repository.user.ForgotPasswordRepositoryCustom;
 import com.leonardo.ecommerce.repository.user.UserRepositoryCustom;
 import lombok.RequiredArgsConstructor;
@@ -25,19 +25,19 @@ public class AdminService {
         if (!forgotPasswordRepositoryCustom.existsById(id)) {
             userRepositoryCustom.softDeletion(id);
         }
-        throw new ErrorHandling.NoContentException();
+        throw new GlobalErrorHandling.NoContentException();
     }
 
     public void hardDeletion(Long id) {
         if (!forgotPasswordRepositoryCustom.existsById(id)) {
             userRepositoryCustom.deleteById(id);
         }
-        throw new ErrorHandling.NoContentException();
+        throw new GlobalErrorHandling.NoContentException();
     }
 
     public void updateUserRoles(Long id, String userRoles) {
         if(!userRepositoryCustom.existsById(id)) {
-            throw new ErrorHandling.NoContentException();
+            throw new GlobalErrorHandling.NoContentException();
         }
         switch (userRoles.trim()) {
             case "ADMIN" -> userRepositoryCustom.updateUserRoles(id, UserRolesEnums.ADMIN);
