@@ -4,6 +4,7 @@ import com.leonardo.ecommerce.domain.ecommerce.Product;
 import com.leonardo.ecommerce.record.ecommerce.ProductDTO;
 import com.leonardo.ecommerce.service.ecommerce.ProductService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -33,20 +34,20 @@ public class ProductsController {
         return ResponseEntity.ok(productDTOs);
     }
 
-    @GetMapping("/getAllProductsWithId")
+    @GetMapping("")
     public ResponseEntity<List<Product>> getAllProductsWithId() {
             var productList = productService.getAllProducts();
         return ResponseEntity.ok(productList);
     }
 
-    @GetMapping("/getProductsById/{productId}")
+    @GetMapping("/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable Long productId) {
         Optional<Product> product = productService.getProductById(productId);
         return ResponseEntity.of(product);
     }
 
-    @PostMapping("/postProduct")
-    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO) {
+    @PostMapping()
+    public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductDTO productDTO) {
         Product createdProduct = productService.createProduct(productDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
@@ -63,13 +64,13 @@ public class ProductsController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("putProduct/{productId}")
+    @PutMapping("/{productId}")
     public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @RequestBody ProductDTO productDTO) {
         Product updated = productService.updateProduct(productId, productDTO);
         return ResponseEntity.ok(updated);
     }
 
-    @PatchMapping("patchProduct/{productId}")
+    @PatchMapping("/{productId}")
     public ResponseEntity<Product> patchProduct(@PathVariable Long productId, @RequestBody ProductDTO productDTO) {
         Product patchedProduct = productService.patchProduct(productId, productDTO);
         return ResponseEntity.ok(patchedProduct);

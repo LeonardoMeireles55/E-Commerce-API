@@ -1,7 +1,10 @@
 package com.leonardo.ecommerce.controller;
 
+import com.leonardo.ecommerce.common.ProductConstant;
+import com.leonardo.ecommerce.controller.ecommerce.ProductsController;
 import com.leonardo.ecommerce.domain.ecommerce.Product;
 import com.leonardo.ecommerce.enums.CategoryEnums;
+import com.leonardo.ecommerce.infra.exception.ErrorHandling;
 import com.leonardo.ecommerce.record.ecommerce.ProductDTO;
 import com.leonardo.ecommerce.service.ecommerce.ProductService;
 import org.junit.jupiter.api.DisplayName;
@@ -16,13 +19,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.io.IOException;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest()
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
 public class ProductControllerTest {
@@ -38,20 +43,23 @@ public class ProductControllerTest {
 
     @Test
     @DisplayName("It should return the http code 201")
-    void productPostTest201() throws Exception {
-        ProductDTO dto = new ProductDTO("test", "teste", 45.50,
-                10, CategoryEnums.BLUSAS, "...", 10.0, 10);
+    void product_post_return_201() throws Exception {
 
-        Product product = new Product(dto.name(),
-                dto.description(), dto.price(),
-                dto.quantityInStock(), dto.categoryEnums(),
-                dto.photoLink(), dto.offPrice(), dto.stars());
+        when(productServiceTest.createProduct(any(ProductDTO.class))).thenReturn(ProductConstant.PRODUCT);
 
-        when(productServiceTest.createProduct(any(ProductDTO.class))).thenReturn(product);
-
-        mvc.perform(post("/products/postProduct")
-                        .content(jacksonTesterProductDTO.write(dto).getJson())
+        mvc.perform(post("/products")
+                        .content(jacksonTesterProductDTO.write(ProductConstant.PRODUCTDTO).getJson())
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated()).andExpect(jsonPath("$.name").value(dto.name()));
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.name")
+                        .value(ProductConstant.PRODUCT.getName()));
+    }
+    @Test
+    @DisplayName("It should return the http code 400")
+    void product_post_return_400() throws Exception {
+
+        mvc.perform(post("/products")
+                        .content(jacksonTesterProductDTO.write(ProductConstant.INVALID_PRODUCT_DTO).getJson())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 }

@@ -8,13 +8,16 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
 @Slf4j
-public class ErrorHandling {
+public class ErrorHandling extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NoContentException.class)
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -65,6 +68,23 @@ public class ErrorHandling {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + exception.getMessage());
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> error400(MethodArgumentNotValidException exception) {
+        log.error("BAD_REQUEST: {}", exception.getLocalizedMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + exception.getMessage());
+    }
+
+    @ExceptionHandler(HttpClientErrorException.UnprocessableEntity.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<String> error422(HttpClientErrorException.UnprocessableEntity exception) {
+        log.error("UNPROCESSABLE_ENTITY: {}", exception.getLocalizedMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + exception.getMessage());
+    }
+
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)

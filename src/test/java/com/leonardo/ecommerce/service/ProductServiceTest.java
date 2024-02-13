@@ -1,56 +1,55 @@
 package com.leonardo.ecommerce.service;
 
+import com.leonardo.ecommerce.common.ProductConstant;
 import com.leonardo.ecommerce.domain.ecommerce.Product;
-import com.leonardo.ecommerce.enums.CategoryEnums;
-import com.leonardo.ecommerce.record.ecommerce.ProductDTO;
 import com.leonardo.ecommerce.repository.ecommerce.ProductRepositoryCustom;
 import com.leonardo.ecommerce.service.ecommerce.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@AutoConfigureJsonTesters
-@RequiredArgsConstructor
+//@SpringBootTest(classes = {ProductService.class, ProductRepositoryCustom.class})
+//@AutoConfigureMockMvc
+//@AutoConfigureJsonTesters
+@ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
-    @MockBean
+    @Mock
     private ProductRepositoryCustom productRepositoryCustom;
 
-    @Autowired
+    @InjectMocks
     private ProductService productServiceTest;
 
     @DisplayName("It should create a product and return it")
     @Test
-    void createProduct() throws Exception {
-        ProductDTO dto = new ProductDTO("test", "test", 45.50,
-                10, CategoryEnums.BLUSAS, "...", 10.0, 10);
-        Product expectedProduct = new Product(dto.name(),
-                dto.description(), dto.price(),
-                dto.quantityInStock(), dto.categoryEnums(),
-                dto.photoLink(), dto.offPrice(), dto.stars());
+    void create_product_return_isEqual() {
 
-        when(productRepositoryCustom.save(any(Product.class))).thenReturn(expectedProduct);
+        when(productRepositoryCustom.save(any(Product.class))).thenReturn(ProductConstant.PRODUCT);
 
-        Product createdProduct = productServiceTest.createProduct(dto);
+        Product createdProduct = productServiceTest.createProduct(ProductConstant.PRODUCTDTO);
 
         assertThat(createdProduct).isNotNull();
-        assertThat(createdProduct.getName()).isEqualTo(dto.name());
-        assertThat(createdProduct.getDescription()).isEqualTo(dto.description());
-        assertThat(createdProduct.getPrice()).isEqualTo(dto.price());
-        assertThat(createdProduct.getQuantityInStock()).isEqualTo(dto.quantityInStock());
-        assertThat(createdProduct.getCategoryEnums()).isEqualTo(dto.categoryEnums());
-        assertThat(createdProduct.getPhotoLink()).isEqualTo(dto.photoLink());
-        assertThat(createdProduct.getOffPrice()).isEqualTo(dto.offPrice());
-        assertThat(createdProduct.getStars()).isEqualTo(dto.stars());
+        assertThat(createdProduct.getName()).isEqualTo(ProductConstant.PRODUCT.getName());
+        assertThat(createdProduct.getDescription()).isEqualTo(ProductConstant.PRODUCT.getDescription());
+        assertThat(createdProduct.getPrice()).isEqualTo(ProductConstant.PRODUCT.getPrice());
+        assertThat(createdProduct.getQuantityInStock()).isEqualTo(ProductConstant.PRODUCT.getQuantityInStock());
+        assertThat(createdProduct.getCategoryEnums()).isEqualTo(ProductConstant.PRODUCT.getCategoryEnums());
+        assertThat(createdProduct.getPhotoLink()).isEqualTo(ProductConstant.PRODUCT.getPhotoLink());
+        assertThat(createdProduct.getOffPrice()).isEqualTo(ProductConstant.PRODUCT.getOffPrice());
+        assertThat(createdProduct.getStars()).isEqualTo(ProductConstant.PRODUCT.getStars());
+    }
+    @Test
+    void create_product_with_invalid() {
+        when(productRepositoryCustom.save(ProductConstant.INVALID_PRODUCT)).thenThrow(RuntimeException.class);
+
+        assertThatThrownBy(() -> productRepositoryCustom.save(ProductConstant.INVALID_PRODUCT))
+                .isInstanceOf(RuntimeException.class);
     }
 }

@@ -2,6 +2,7 @@ package com.leonardo.ecommerce.domain.ecommerce;
 
 import com.leonardo.ecommerce.enums.CategoryEnums;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,6 @@ import lombok.Setter;
 @Table(name = "product")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Product {
     
@@ -46,6 +46,17 @@ public class Product {
     private double offPrice;
 
     public Product(String name, String description, Double price, Integer quantityInStock, CategoryEnums categoryEnums, String photoLink, Double offPrice, Integer stars ) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantityInStock = quantityInStock;
+        this.categoryEnums = categoryEnums;
+        this.photoLink = photoLink;
+        this.offPrice = offPrice;
+        this.stars = stars;
+    }
+    public Product(Long id, String name, String description, Double price, Integer quantityInStock, CategoryEnums categoryEnums, String photoLink, Double offPrice, Integer stars ) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
