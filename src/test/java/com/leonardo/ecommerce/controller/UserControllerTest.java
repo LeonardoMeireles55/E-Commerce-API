@@ -36,7 +36,6 @@ public class UserControllerTest {
     @Autowired
     private JacksonTester<SignUpDTO> authDataJacksonTester;
 
-
     @Test
     @DisplayName("Should return http code 201 when information is valid")
     void register_scenario1() throws Exception {
