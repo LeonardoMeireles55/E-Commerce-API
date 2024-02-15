@@ -3,27 +3,29 @@ package com.leonardo.ecommerce.controller.user;
 import com.leonardo.ecommerce.record.user.AddressDTO;
 import com.leonardo.ecommerce.record.user.SignInDTO;
 import com.leonardo.ecommerce.record.security.TokenJwtDTO;
+import com.leonardo.ecommerce.record.user.SignUpDTO;
 import com.leonardo.ecommerce.record.user.UserDTO;
 import com.leonardo.ecommerce.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Transactional
     @PostMapping("/signUp")
-    public ResponseEntity<Void> signUp
-        (@RequestBody UserDTO userDTO, AddressDTO addressDTO) {
-            userService.signUp(userDTO.username(), userDTO.firstName(), userDTO.LastName(),
-                    userDTO.dateBirth(), userDTO.email(), userDTO.password(), addressDTO);
-                return ResponseEntity.noContent().build();
+    public ResponseEntity<SignUpDTO> signUp
+        (@RequestBody SignUpDTO userDTO, UriComponentsBuilder uriComponentsBuilder) {
+        var user = userService.signUp(userDTO);
+        var uri = uriComponentsBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri();
+                return ResponseEntity.created(uri).body(userDTO);
     }
 
     @PostMapping("/signIn")
