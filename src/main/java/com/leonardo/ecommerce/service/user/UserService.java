@@ -3,8 +3,8 @@ package com.leonardo.ecommerce.service.user;
 
 import com.leonardo.ecommerce.infra.security.component.BCryptEncoderComponent;
 import com.leonardo.ecommerce.domain.user.User;
-import com.leonardo.ecommerce.record.user.AddressDTO;
 import com.leonardo.ecommerce.record.security.TokenJwtDTO;
+import com.leonardo.ecommerce.record.user.SignUpDTO;
 import com.leonardo.ecommerce.repository.user.UserRepositoryCustom;
 import com.leonardo.ecommerce.service.security.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -31,11 +31,12 @@ public class UserService {
         return new TokenJwtDTO(token);
     }
 
-    public void signUp(String userName, String firstName, String lastName, String dateBirth, String email,
-                       String password, AddressDTO addressDTO) {
-        var passEncoded = BCryptEncoderComponent.encrypt(password);
-        var user = new User(userName, firstName, lastName, dateBirth, email, passEncoded, addressDTO.postalCode(), addressDTO.state(), addressDTO.city(),addressDTO.street());
+    public User signUp(SignUpDTO signUpDTO) {
+        var passEncoded = BCryptEncoderComponent.encrypt(signUpDTO.password());
+        var user = new User(signUpDTO.username(), signUpDTO.firstName(), signUpDTO.lastName(), signUpDTO.dateBirth(),
+                signUpDTO.email(), passEncoded, signUpDTO.postalCode(), signUpDTO.city(),
+                signUpDTO.state(), signUpDTO.street());
 
-        userRepositoryCustom.save(user);
+       return userRepositoryCustom.save(user);
     }
 }
