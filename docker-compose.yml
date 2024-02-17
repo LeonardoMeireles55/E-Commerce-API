@@ -20,7 +20,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     working_dir: /usr/src/app
-    container_name: AuthUserAPI
+    container_name: e-commerce-API
     env_file: ./.env
     ports:
       - "${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}"
@@ -31,7 +31,7 @@ services:
     stdin_open: true
     tty: true
     expose:
-      - 8090:8090
+      - 8093:8093
 
 volumes:
   mysql-volume:

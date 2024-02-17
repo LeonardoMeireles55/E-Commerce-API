@@ -34,7 +34,7 @@ public class ProductsController {
         return ResponseEntity.ok(productDTOs);
     }
 
-    @GetMapping("")
+    @GetMapping()
     public ResponseEntity<List<Product>> getAllProductsWithId() {
             var productList = productService.getAllProducts();
         return ResponseEntity.ok(productList);
