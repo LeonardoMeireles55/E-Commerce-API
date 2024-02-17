@@ -27,20 +27,20 @@ public class OrdersController {
         return ResponseEntity.ok(orders);
     }
 
-    @GetMapping("getOrderBy/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Orders> getOrderById(@PathVariable Long id) {
         return ordersService.getOrderById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/postOrder")
+    @PostMapping("/")
     public ResponseEntity<Orders> createOrder(@RequestBody Orders order) {
         Orders createdOrder = ordersService.createOrder(order);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
 
-    @PutMapping("putOrderById/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Orders> updateOrder(@PathVariable Long id, @RequestBody Orders updatedOrder) {
         return ordersService.getOrderById(id)
                 .map(existingOrder -> {
@@ -50,7 +50,7 @@ public class OrdersController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("deleteOrderById/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrderById(@PathVariable Long id) {
         ordersService.deleteOrderById(id);
         return ResponseEntity.noContent().build();

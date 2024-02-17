@@ -37,19 +37,19 @@ public class OrderItemController {
         return ResponseEntity.ok(orderItems);
     }
 
-    @GetMapping("getOrderItemById/{id}")
+    @GetMapping("/{id}")
     public Optional<OrderItem> getOrderItemById(@PathVariable Long id) {
         return orderItemService.getOrderItemById(id);
     }
 
-    @PostMapping("/postOrderItem")
+    @PostMapping("/")
     public ResponseEntity<OrderItem> saveOrderItem(@RequestBody OrderItemNoWithUnitPriceDTO orderItemDTO) {
         OrderItem createdOrderItem = orderItemService.saveOrderItem(orderItemDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrderItem);
     }
 
-    @DeleteMapping("deleteOrderItemById/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrderItem(@PathVariable Long id) {
         orderItemService.deleteOrderItem(id);
         return ResponseEntity.noContent().build();
