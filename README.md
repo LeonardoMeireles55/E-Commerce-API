@@ -12,6 +12,10 @@
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 
+## ER Diagram
+![image](https://github.com/LeonardoMeireles55/SpringBoot-Ecommerce-Backend/assets/123477726/82b0e377-72a1-4d95-b71e-e2694c657854)
+
+
 ## Description
 A Spring Boot project simple E-Commerce.
 
