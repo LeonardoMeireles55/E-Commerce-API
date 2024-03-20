@@ -2,8 +2,6 @@ package com.leonardo.ecommerce.domain.ecommerce;
 
 import com.leonardo.ecommerce.enums.CategoryEnums;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,8 +1,6 @@
 package com.leonardo.ecommerce.service;
 
-import com.leonardo.ecommerce.common.ProductConstant;
 import com.leonardo.ecommerce.common.UserConstant;
-import com.leonardo.ecommerce.domain.ecommerce.Product;
 import com.leonardo.ecommerce.domain.user.User;
 import com.leonardo.ecommerce.repository.user.UserRepositoryCustom;
 import com.leonardo.ecommerce.service.user.UserService;
