@@ -1,10 +1,8 @@
 package com.leonardo.ecommerce.controller.user;
 
-import com.leonardo.ecommerce.record.user.AddressDTO;
 import com.leonardo.ecommerce.record.user.SignInDTO;
 import com.leonardo.ecommerce.record.security.TokenJwtDTO;
 import com.leonardo.ecommerce.record.user.SignUpDTO;
-import com.leonardo.ecommerce.record.user.UserDTO;
 import com.leonardo.ecommerce.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
