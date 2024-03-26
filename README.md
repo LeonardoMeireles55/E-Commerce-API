@@ -19,8 +19,8 @@
 ## Description
 A Spring Boot project simple E-Commerce.
 
-## Coming soon
-* Improve API documentation.
+## Deploy
+* [API](https://e-commerce-api-px3e.onrender.com)
 
 #### Requirements
 * [Java 17](https://www.oracle.com/br/java/technologies/javase/jdk17-archive-downloads.html)
