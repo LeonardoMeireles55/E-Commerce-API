@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.leonardo.ecommerce.domain.ecommerce.Product;
 import com.leonardo.ecommerce.repository.ecommerce.ProductRepositoryCustom;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,6 +26,7 @@ public class ProductService {
         return productRepositoryCustom.findById(productId);
     }
 
+    @Transactional
     public Product createProduct(ProductDTO productDTO) {
             var product
                     = new Product
@@ -48,10 +50,12 @@ public class ProductService {
         return productRepositoryCustom.save(existingProduct);
     }
 
+    @Transactional
     public void deleteProductById(Long productId) {
         productRepositoryCustom.deleteById(productId);
     }
 
+    @Transactional
     public Product patchProduct(Long productId, ProductDTO productDTO) {
         Product existingProduct = productRepositoryCustom.getReferenceById(productId);
 
@@ -73,9 +77,9 @@ public class ProductService {
     }
 
     public Double getPriceById(Long id) {
-        var productPrice = productRepositoryCustom.getReferenceById(id);
+        var productPrice = productRepositoryCustom.getReferenceById(id).getPrice();
 
-        return productPrice.getPrice();
+        return productPrice;
     }
 }
 

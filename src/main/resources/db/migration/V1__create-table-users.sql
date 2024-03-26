@@ -15,7 +15,6 @@ CREATE TABLE users (
                        enabled BOOLEAN DEFAULT TRUE NOT NULL,
                        user_roles VARCHAR(25) NOT NULL
 );
--- Create indexes
 CREATE INDEX idx_username ON users (username);
 CREATE INDEX idx_email ON users (email);
 CREATE INDEX idx_enabled ON users (enabled);
